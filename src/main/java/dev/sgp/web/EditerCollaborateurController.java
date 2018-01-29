@@ -16,14 +16,13 @@ public class EditerCollaborateurController extends HttpServlet {
 		String nomParam = req.getParameter("nom");
 		String prenomParam = req.getParameter("prenom");
 		resp.setContentType("text/html");
-		resp.getWriter().write("<h1>Edition de collaborateurs</h1>");
+
 
 		if (matriculeParam == null) {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			resp.getWriter().write( "<ul>" + "<li> un matricule est attendu"
-					+ "</li>" + "</ul>");
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"un matricule est attendu");
 		} else {
 			// code HTML ecrit dans le corps de la reponse
+			resp.getWriter().write("<h1>Edition de collaborateurs</h1>");
 			resp.getWriter().write( "<ul>" + "<li>Matricule :" + matriculeParam
 					+ "</li>" + "</ul>");
 		}
@@ -37,14 +36,12 @@ public class EditerCollaborateurController extends HttpServlet {
 		String nomParam = req.getParameter("nom");
 		String prenomParam = req.getParameter("prenom");
 		resp.setContentType("text/html");
-		resp.getWriter().write("<h1>Edition de collaborateurs</h1>");
 
-		if (matriculeParam == null || titreParam == null || nomParam == null || prenomParam == null) {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			resp.getWriter()
-					.write("<ul>" + "<li> Les paramètres suivants sont incorrects </li>"+ isNull(matriculeParam,"matricule") + isNull(titreParam,"titre")+isNull(nomParam,"nom")+isNull(prenomParam,"prenom")+ "</ul>");
+		if (matriculeParam == null ||matriculeParam.isEmpty() || titreParam == null || titreParam.isEmpty()|| nomParam == null || nomParam.isEmpty()|| prenomParam == null || prenomParam.isEmpty()) {
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,(isNull(matriculeParam,"matricule") + isNull(titreParam,"titre")+isNull(nomParam,"nom")+isNull(prenomParam,"prenom")));
 		} else {
 			resp.setStatus(HttpServletResponse.SC_CREATED);
+			resp.getWriter().write("<h1>Edition de collaborateurs</h1>");
 			resp.getWriter()
 					.write("<ul>" + "<li>Creation d'un collaborateur avec les parametres suivants :</li>"
 							+ "<li>matricule : " + matriculeParam + "</li>" + "<li>titre : " + titreParam + "</li>"
@@ -52,8 +49,8 @@ public class EditerCollaborateurController extends HttpServlet {
 		}
 	}
 	private String isNull(String s, String p){
-		if(s == null){
-			return ("<li>"+p+"</li>");
+		if(s == null || s.isEmpty()){
+			return (p);
 		}
 		return "";
 	}
