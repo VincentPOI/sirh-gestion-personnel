@@ -38,7 +38,7 @@ public class EditerCollaborateurController extends HttpServlet {
 		resp.setContentType("text/html");
 
 		if (matriculeParam == null ||matriculeParam.isEmpty() || titreParam == null || titreParam.isEmpty()|| nomParam == null || nomParam.isEmpty()|| prenomParam == null || prenomParam.isEmpty()) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,(isNull(matriculeParam,"matricule") + isNull(titreParam,"titre")+isNull(nomParam,"nom")+isNull(prenomParam,"prenom")));
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,("il manque les parametres suivants :"+isNull(matriculeParam,"matricule") + isNull(titreParam,"titre")+isNull(nomParam,"nom")+isNull(prenomParam,"prenom")));
 		} else {
 			resp.setStatus(HttpServletResponse.SC_CREATED);
 			resp.getWriter().write("<h1>Edition de collaborateurs</h1>");
